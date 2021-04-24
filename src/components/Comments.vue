@@ -1,9 +1,9 @@
 <template>
   <div
     class="fixed inset-0 bg-red-500 bg-center bg-cover"
-    style="
-      background-image: url('https://via.placeholder.com/1920x1080.png?text=MoviesDB+Background+Image');
-    "
+    :style="`
+      background-image: url('${bgBaseURL}${movie.backdrop_path}');
+    `"
   >
     <button @click="emit('close')" class="absolute text-red-300 left-3 top-3">
       <mdi:close-box class="w-12 h-12 filter drop-shadow-2xl" />
@@ -12,7 +12,7 @@
       <h1
         class="text-4xl font-bold tracking-wider uppercase text-coolGray-100 filter drop-shadow-2xl"
       >
-        movie.title
+        {{ movie.title }}
       </h1>
     </div>
     <div
@@ -38,7 +38,20 @@
 </template>
 
 <script setup>
-  import { defineEmit } from 'vue'
+  import { defineEmit, defineProps } from 'vue'
+  import { bgBaseURL } from '~/helpers/useMovies'
 
   const emit = defineEmit(['close'])
+
+  const props = defineProps({
+    movie: {
+      type: Object,
+      default: () => {
+        return {
+          title: '',
+          backdrop_path: '',
+        }
+      },
+    },
+  })
 </script>
